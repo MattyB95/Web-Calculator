@@ -1,0 +1,91 @@
+/* Import the font style 'pocketCalculator' for displaying calculator-like font in the display */
+@font-face {
+font-family:pocketCalculator;
+src:url(pocketcalculator.ttf);
+}
+
+/* Set the style for the entire body of the document */
+body {
+background-color:#FC9;
+font-family:Arial, Verdana, sans-serif;
+}
+
+/* Style the title / heading */
+h1 {
+text-align:center;
+font-size:40px;
+color:#03C;
+}
+
+/* Style for the displays of the calculator */
+#display,#cal_display {
+background-color:#9FC;
+text-align:right;
+box-shadow:inset;
+}
+
+/* Style for the main display */
+#display {
+height:100px;
+font-family:pocketCalculator;
+font-size:72px;
+}
+
+/* Style for the calculation display which shows the entire calculation */
+#cal_display {
+height:25px;
+font-family:Questrial;
+font-size:24px;
+max-width:625px;
+overflow:hidden;
+text-overflow:ellipsis;
+white-space:nowrap;
+}
+
+/* Style for the overall calculator */
+#calculator_grid {
+border-collapse:collapse;
+border-spacing:0;
+border:3px solid #000;
+margin-left:auto;
+margin-right:auto;
+background-color:#000;
+}
+
+/* Remove the padding between table cells */
+#calculator_grid td {
+padding:0;
+}
+
+/* Style all the calculator buttons */
+.cal_btn {
+height:120px;
+width:125px;
+font-family:Questrial;
+font-size:50px;
+border-radius:40px;
+box-shadow:2px 2px 2px #888;
+}
+
+/* Style all the operation buttons */
+.operation {
+background-color:#F93;
+}
+
+/* Make the zero button 2 times as wide */
+#zero {
+width:375px;
+}
+
+/* Make the equals button 2 times as tall and give it a unique background */
+#equals {
+height:240px;
+background-color:#69F;
+}
+
+/* Style the footer */
+footer {
+text-align:center;
+font-size:20px;
+color:#C00;
+}
