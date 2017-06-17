@@ -1,14 +1,14 @@
 /* Most of the work is at the client end, apart from the calculations.  The 
-client is to be implemented as an HTML file containing JavaScript and using the 
-JQuery libraries. The web client accepts events from the button presses, and all 
-data and functions are input via the calculator keypad.  It should not be 
-possible to type numbers into the numeric display directly from the keyboard.
+ client is to be implemented as an HTML file containing JavaScript and using the
+ JQuery libraries. The web client accepts events from the button presses, and all
+ data and functions are input via the calculator keypad.  It should not be
+ possible to type numbers into the numeric display directly from the keyboard.
 
-The operation of the calculator input needs a bit of thought.  This should 
-perform in the same way as a normal 'basic' calculator - you should check a real 
-calculator or (e.g.) a windows calculator to make sure you know exactly how it 
-operates and any idiosyncrasies that users will expect. */
-$(document).ready(function() {
+ The operation of the calculator input needs a bit of thought.  This should
+ perform in the same way as a normal 'basic' calculator - you should check a real
+ calculator or (e.g.) a windows calculator to make sure you know exactly how it
+ operates and any idiosyncrasies that users will expect. */
+$(document).ready(function () {
 
     // display used to make accessing the display element quicker and easier.
     var display = $('#display');
@@ -34,17 +34,17 @@ $(document).ready(function() {
     var preOperand;
 
     /* The main function that will be called when all numeric buttons are 
-	pressed. It starts by calling a jQuery UI effect "Highlight" on the button
-	to make the user more aware that the button has been pressed and goes on to
-	perform the correct response based on the calculators current state. */
-    $('.number').click(function() {
+     pressed. It starts by calling a jQuery UI effect "Highlight" on the button
+     to make the user more aware that the button has been pressed and goes on to
+     perform the correct response based on the calculators current state. */
+    $('.number').click(function () {
         $(this).effect("highlight", {
             color: '#00CCFF'
         }, 150);
         if (!finish) {
             /* If the calculation hasn't finished yet (i.e. "=" not pressed).
-                The button pressed was not an operation (i.e. a digit),
-				allow the display to be changed. */
+             The button pressed was not an operation (i.e. a digit),
+             allow the display to be changed. */
             canChange = true;
             if (isClear() || clearNext) {
                 // If the displayed needs to be cleared, clear it.
@@ -53,20 +53,20 @@ $(document).ready(function() {
             }
             if (checkDisplayLength()) {
                 // If the text is within bounds (i.e <= 8) then change the display.
-                if ($(this).text() == '.' && !decimalUsed && isClear()) {
+                if ($(this).text() === '.' && !decimalUsed && isClear()) {
                     /* If the '.' button was pressed and the decimal can be used
-						and the screen is currently clear display, than show the
-						display with a 0 (e.g. '0.') and set decimalUsed to true. */
+                     and the screen is currently clear display, than show the
+                     display with a 0 (e.g. '0.') and set decimalUsed to true. */
                     changeDisplay('0' + $(this).text());
                     decimalUsed = true;
-                } else if ($(this).text() == '.' && !decimalUsed) {
+                } else if ($(this).text() === '.' && !decimalUsed) {
                     /* If the '.' button was pressed and the decimal can be used
-						display the decimal and set decimalUsed to true. */
+                     display the decimal and set decimalUsed to true. */
                     changeDisplay(display.text() + $(this).text());
                     decimalUsed = true;
-                } else if ($(this).text() != '.') {
+                } else if ($(this).text() !== '.') {
                     /* If the '.' button was not pressed (i.e. button pressed
-						was a number), then add the number to the display. */
+                     was a number), then add the number to the display. */
                     changeDisplay(display.text() + $(this).text());
                 }
             }
@@ -74,9 +74,9 @@ $(document).ready(function() {
             // Else the calculation was finished or was cancelled due to an error.
             clear();
             /* The button pressed was not an operation (i.e. it is a digit),
-				change the display to the text of the button pressed and don't 
-				clear the screen next time by changing clearNext to false. */
-            if ($(this).text() == '.') {
+             change the display to the text of the button pressed and don't
+             clear the screen next time by changing clearNext to false. */
+            if ($(this).text() === '.') {
                 // If the decimal was selected change decimal used to true. 
                 changeDisplay('0' + $(this).text());
                 decimalUsed = true;
@@ -91,42 +91,42 @@ $(document).ready(function() {
     });
 
     /* The main function that will be called when all operation buttons are 
-	pressed. It starts by calling a jQuery UI effect "Highlight" on the button
-	to make the user more aware that the button has been pressed and goes on to
-	perform the correct response based on the calculators current state. */
-    $('.operation').click(function() {
+     pressed. It starts by calling a jQuery UI effect "Highlight" on the button
+     to make the user more aware that the button has been pressed and goes on to
+     perform the correct response based on the calculators current state. */
+    $('.operation').click(function () {
         $(this).effect("highlight", {
             color: '#00CCFF'
         }, 150);
         if (!finish) {
             // If the calculation hasn't finished yet (i.e. "=" not pressed).
-            if (display.text() != 'Err' || $(this).hasClass('clear')) {
+            if (display.text() !== 'Err' || $(this).hasClass('clear')) {
                 /* If the button pressed was an operation ("+", "-", "/", "*", "=")
-				and not currently displaying the error message or the button pressed 
-				was a clear function ("C", "CE") call the method handleOperation 
-				passing the operation as a parameter. */
+                 and not currently displaying the error message or the button pressed
+                 was a clear function ("C", "CE") call the method handleOperation
+                 passing the operation as a parameter. */
                 handleOperation($(this).text());
             }
         } else {
             /* Else the calculation was finished or was cancelled due to an error.
-			Temporarily store the display value in a variable. */
+             Temporarily store the display value in a variable. */
             var temp = display.text();
-            if ($(this).text() != '=') {
+            if ($(this).text() !== '=') {
                 // If the button pressed was not equals then clear the display.
                 clear();
-            } else if (display.text() != 'Err') {
+            } else if (display.text() !== 'Err') {
                 /* If it was equals and the display is not an error, then replace the first 
-				operand with the current display value. */
+                 operand with the current display value. */
                 firstOperand = displayToFloat();
             }
             /* Change the display with the temporary variable. This helps when
-			an error has occurred to stop operations displaying in calculation display. */
+             an error has occurred to stop operations displaying in calculation display. */
             changeDisplay(temp);
-            if (display.text() != 'Err' || $(this).hasClass('clear')) {
+            if (display.text() !== 'Err' || $(this).hasClass('clear')) {
                 /* If the button pressed was an operation ("+", "-", "/", "*", "=")
-				and not currently displaying the error message or the button pressed 
-				was a clear function ("C", "CE") call the method handleOperation 
-				passing the operation as a parameter. */
+                 and not currently displaying the error message or the button pressed
+                 was a clear function ("C", "CE") call the method handleOperation
+                 passing the operation as a parameter. */
                 handleOperation($(this).text());
             }
             // The finish operations are now complete, set finish to false.
@@ -135,7 +135,7 @@ $(document).ready(function() {
     });
 
     /* The handleOperation function will detail with what to do if an operation
-	button has been pressed on the calculator. */
+     button has been pressed on the calculator. */
     function handleOperation(currentOperation) {
         switch (currentOperation) {
             case '+':
@@ -144,20 +144,20 @@ $(document).ready(function() {
             case '*':
                 if (canChange) {
                     /* If the operation was an arithmetic function, call
-					addTOCalculation and addOperand, then check whether a 
-					calculation should be performed with shouldPerformCalculation.
-					Afterwards set the operation to the one provided and set canChange
-					to false to prevent further changes and decimalUsed to false
-					so it can be used again for new input. */
+                     addTOCalculation and addOperand, then check whether a
+                     calculation should be performed with shouldPerformCalculation.
+                     Afterwards set the operation to the one provided and set canChange
+                     to false to prevent further changes and decimalUsed to false
+                     so it can be used again for new input. */
                     addToCalculation(currentOperation);
                     addOperand();
-                    shouldPerformCalculation()
+                    shouldPerformCalculation();
                     operation = currentOperation;
                     decimalUsed = false;
                     canChange = false;
                 } else {
                     /* Else means the user is changing operation without entering a 
-					digit, therefore handle the operation change */
+                     digit, therefore handle the operation change */
                     operation = currentOperation;
                     calculation.pop();
                     calculation.push(currentOperation);
@@ -167,11 +167,11 @@ $(document).ready(function() {
             case '=':
                 if (!finish) {
                     /* If the calculation has not finished place whatever is currently 
-					in the display in the secondOperand variable. */
+                     in the display in the secondOperand variable. */
                     secondOperand = displayToFloat();
                 } else {
                     /* Else the calculation had previously completed so set the 
-					secondOperand to the previous operand and set preOperand to null. */
+                     secondOperand to the previous operand and set preOperand to null. */
                     secondOperand = preOperand;
                     preOperand = null;
                 }
@@ -192,9 +192,9 @@ $(document).ready(function() {
     }
 
     /* The addOperand function will set the display to correct operand variable 
-	based on which one currently needs filling. */
+     based on which one currently needs filling. */
     function addOperand() {
-        if (firstOperand == null) {
+        if (firstOperand === null) {
             firstOperand = displayToFloat();
         } else {
             secondOperand = displayToFloat();
@@ -202,24 +202,24 @@ $(document).ready(function() {
     }
 
     /* The performCalculation function sends the operands and the corresponding
-	operation to the server to be performed and displays the response. */
+     operation to the server to be performed and displays the response. */
     function performCalculation(additionalOperations) {
         $.post('calculate.php', {
                 firstOperand: firstOperand,
                 operation: operation,
                 secondOperand: secondOperand
             },
-            function(result) {
+            function (result) {
                 if (additionalOperations) {
                     /* If there are more inputs to come (i.e. this wasn't triggered
-					by "=") then call resetVariables and set the result to the
-					first operand for more operations to be performed upon. */
+                     by "=") then call resetVariables and set the result to the
+                     first operand for more operations to be performed upon. */
                     resetVariables();
                     firstOperand = result;
                 } else {
                     /* Else calculation finished (i.e. trigged by "=") so clear the
-					entire calculation and set preOperand to the second operand in
-					case the user presses "=" again and set finish to true. */
+                     entire calculation and set preOperand to the second operand in
+                     case the user presses "=" again and set finish to true. */
                     clearCalculation();
                     preOperand = secondOperand;
                     finish = true;
@@ -231,20 +231,12 @@ $(document).ready(function() {
 
     // Check if the display is already cleared.
     function isClear() {
-        if (display.text() == '0' || display.text() == '') {
-            return true;
-        } else {
-            return false;
-        }
+        return display.text() === '0' || display.text() === '';
     }
 
     // Check if the display has not exceeded the maximum input of 8.
     function checkDisplayLength() {
-        if (display.text().length < 8) {
-            return true;
-        } else {
-            return false;
-        }
+        return display.text().length < 8;
     }
 
     // Return the display value as an integer.
@@ -260,17 +252,17 @@ $(document).ready(function() {
     }
 
     /* Loop through the calculation array and display the content of the entire
-	calculation above the main display. */
+     calculation above the main display. */
     function displayCalculation() {
         var cal_display = $('#cal_display');
         cal_display.text('');
-        for (index = 0; index < calculation.length; index++) {
+        for (var index = 0; index < calculation.length; index++) {
             cal_display.text(cal_display.text() + ' ' + calculation[index]);
         }
     }
 
     /* change the display to the passed parameter. If the parameter is greater than
-	8 then an error has occurred so display "Err" and finish will then become true. */
+     8 then an error has occurred so display "Err" and finish will then become true. */
     function changeDisplay(input) {
         if (input.length <= 8) {
             display.text(input);
@@ -323,18 +315,18 @@ $(document).ready(function() {
             // If the result contains a decimal.
             while (result_string.length > 8) {
                 // While the result with a decimal is greater than 8 cut it down to a length of 8.
-                if (result_string.length == 9) {
+                if (result_string.length === 9) {
                     /* If its current length is 9 (i.e. it's about to become 8). Calculate
-							the length of the decimal part of the number. */
+                     the length of the decimal part of the number. */
                     var decimalLength = result_string.length - result_string.indexOf('.') - 1;
                     if (decimalLength > 0) {
                         /* If the length of the decimal is greater than 0 then cut the result down and
-								round the answer so that it has the decimal length - 1 to make it length 8
-								overall. */
+                         round the answer so that it has the decimal length - 1 to make it length 8
+                         overall. */
                         result_string = parseFloat(result_string).toFixed(decimalLength - 1).toString();
                     } else {
                         /* If the last digit is the decimal '.' then remove it and return a 
-								7 digit string. */
+                         7 digit string. */
                         result_string = parseFloat(result_string).toFixed(0).toString();
                     }
                 } else {
@@ -344,8 +336,8 @@ $(document).ready(function() {
             }
             if (isNaN(result_string.substring(result_string.length - 1))) {
                 /* If by cutting the string down to length 8, the final digit is not numeric 
-						(e.g. "E", "+", "-"), then the result could not fit onto the display at all so echo 
-						a message which is greater than length 8 to make the calculator display 'Err'. */
+                 (e.g. "E", "+", "-"), then the result could not fit onto the display at all so echo
+                 a message which is greater than length 8 to make the calculator display 'Err'. */
                 result_string = 'Display the error message';
             }
         }

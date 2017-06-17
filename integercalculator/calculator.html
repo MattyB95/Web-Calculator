@@ -5,70 +5,104 @@
     which also handles all key input - however all of the calculations are performed 
     in the web server. -->
 <html>
-    <head>
-        <title>Web Calculator</title>
-        <meta charset="UTF-8">
-        <meta name="description" content="Web Calculator Assignment for CO539">
-        <meta name="keywords" content="Integer Calculator">
-        <meta name="author" content="Matthew Boakes (mb689)">
-        <!-- Link to use the font 'Questrial' from Google Fonts -->
-        <link href='http://fonts.googleapis.com/css?family=Questrial' rel='stylesheet' type='text/css'>
-        <!-- Link to my CSS style-sheet for the calculator -->
-        <link rel="stylesheet" type="text/css" href="calculator.css">
-        <!-- Links to access and use the jQuery and jQuery UI libraries -->
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-        <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
-        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
-        <!-- Link to my JavaScript / jQuery file to handle all calculator operations and functions -->
-        <script src="calculator.js"></script>
-    </head>
-    <body>
-        <h1>Integer Calculator</h1>
-        <br>
-        <!-- Table used to create an format the appearance of the calculator -->
-        <table id="calculator_grid">
-            <tr>
-                <!-- Display for the storage of the entire calculation being performed -->
-                <td colspan="5">
-                    <div id="cal_display"></div>
-                </td>
-            </tr>
-            <tr>
-                <!-- The main display for the current activity or final result -->
-                <td colspan="5" id="display">0</td>
-            </tr>
-            <tr>
-                <td><button type="button" class="cal_btn number">7</button></td>
-                <td><button type="button" class="cal_btn number">8</button></td>
-                <td><button type="button" class="cal_btn number">9</button></td>
-                <td><button type="button" class="cal_btn operation">/</button></td>
-                <td><button type="button" class="cal_btn operation clear">C</button></td>
-            </tr>
-            <tr>
-                <td><button type="button" class="cal_btn number">4</button></td>
-                <td><button type="button" class="cal_btn number">5</button></td>
-                <td><button type="button" class="cal_btn number">6</button></td>
-                <td><button type="button" class="cal_btn operation">*</button></td>
-                <td><button type="button" class="cal_btn operation clear">CE</button></td>
-            </tr>
-            <!-- Collection of buttons to trigger all the calculator functions -->
-            <tr>
-                <td><button type="button" class="cal_btn number">1</button></td>
-                <td><button type="button" class="cal_btn number">2</button></td>
-                <td><button type="button" class="cal_btn number">3</button></td>
-                <td><button type="button" class="cal_btn operation">-</button></td>
-                <td rowspan="2"><button type="button" class="cal_btn operation" id="equals">=</button></td>
-            </tr>
-            <tr>
-                <td colspan="3"><button type="button" class="cal_btn number" id="zero">0</button></td>
-                <td><button type="button" class="cal_btn operation">+</button></td>
-            </tr>
-        </table>
-        <br>
-        <!-- Footer to contain my name and assessment details -->
-        <footer>
-            <h3>CO539: Web Development; Assessment 2 - AJAX</h3>
-            <h4>Matthew Boakes (mb689)</h4>
-        </footer>
-    </body>
+<head>
+    <title>Web Calculator</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Web Calculator Assignment for CO539">
+    <meta name="keywords" content="Integer Calculator">
+    <meta name="author" content="Matthew Boakes (mb689)">
+    <!-- Link to use the font 'Questrial' from Google Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Questrial' rel='stylesheet' type='text/css'>
+    <!-- Link to my CSS style-sheet for the calculator -->
+    <link rel="stylesheet" type="text/css" href="calculator.css">
+    <!-- Links to access and use the jQuery and jQuery UI libraries -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css"/>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+    <!-- Link to my JavaScript / jQuery file to handle all calculator operations and functions -->
+    <script src="calculator.js"></script>
+</head>
+<body>
+<h1>Integer Calculator</h1>
+<br>
+<!-- Table used to create an format the appearance of the calculator -->
+<table id="calculator_grid">
+    <tr>
+        <!-- Display for the storage of the entire calculation being performed -->
+        <td colspan="5">
+            <div id="cal_display"></div>
+        </td>
+    </tr>
+    <tr>
+        <!-- The main display for the current activity or final result -->
+        <td colspan="5" id="display">0</td>
+    </tr>
+    <tr>
+        <td>
+            <button type="button" class="cal_btn number">7</button>
+        </td>
+        <td>
+            <button type="button" class="cal_btn number">8</button>
+        </td>
+        <td>
+            <button type="button" class="cal_btn number">9</button>
+        </td>
+        <td>
+            <button type="button" class="cal_btn operation">/</button>
+        </td>
+        <td>
+            <button type="button" class="cal_btn operation clear">C</button>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <button type="button" class="cal_btn number">4</button>
+        </td>
+        <td>
+            <button type="button" class="cal_btn number">5</button>
+        </td>
+        <td>
+            <button type="button" class="cal_btn number">6</button>
+        </td>
+        <td>
+            <button type="button" class="cal_btn operation">*</button>
+        </td>
+        <td>
+            <button type="button" class="cal_btn operation clear">CE</button>
+        </td>
+    </tr>
+    <!-- Collection of buttons to trigger all the calculator functions -->
+    <tr>
+        <td>
+            <button type="button" class="cal_btn number">1</button>
+        </td>
+        <td>
+            <button type="button" class="cal_btn number">2</button>
+        </td>
+        <td>
+            <button type="button" class="cal_btn number">3</button>
+        </td>
+        <td>
+            <button type="button" class="cal_btn operation">-</button>
+        </td>
+        <td rowspan="2">
+            <button type="button" class="cal_btn operation" id="equals">=</button>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            <button type="button" class="cal_btn number" id="zero">0</button>
+        </td>
+        <td>
+            <button type="button" class="cal_btn operation">+</button>
+        </td>
+    </tr>
+</table>
+<br>
+<!-- Footer to contain my name and assessment details -->
+<footer>
+    <h3>CO539: Web Development; Assessment 2 - AJAX</h3>
+    <h4>Matthew Boakes (mb689)</h4>
+</footer>
+</body>
 </html>
